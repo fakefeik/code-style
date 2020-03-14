@@ -226,7 +226,7 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=3F74BF508828634FB9CFA08BE9CB67D4/LanguageName/@EntryValue">CSHARP</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=3F74BF508828634FB9CFA08BE9CB67D4/MatchCatchClauseWithoutExceptionFilter/@EntryValue">False</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=3F74BF508828634FB9CFA08BE9CB67D4/SearchPattern/@EntryValue">Assert.$Method$($args$)</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=3F74BF508828634FB9CFA08BE9CB67D4/Severity/@EntryValue">SUGGESTION</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=3F74BF508828634FB9CFA08BE9CB67D4/Severity/@EntryValue">HINT</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/StructuralSearch/Pattern/=3F74BF508828634FB9CFA08BE9CB67D4/SuppressionKey/@EntryValue">NoNUnitAssert</s:String>
 
 </wpf:ResourceDictionary>

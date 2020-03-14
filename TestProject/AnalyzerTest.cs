@@ -24,7 +24,7 @@ namespace TestProject
             project = project.AddMetadataReferences(assemblies.Select(x => MetadataReference.CreateFromFile(x)));
 
             var compilation = project.GetCompilationAsync().GetAwaiter().GetResult();
-            var c = compilation.WithAnalyzers(ImmutableArray.Create((DiagnosticAnalyzer)new MakeConstAnalyzer()));
+            var c = compilation.WithAnalyzers(ImmutableArray.Create((DiagnosticAnalyzer)new MakeConstAnalyzer(), new AssertEqualsAnalyzer()));
             var diagnostics = c.GetAnalyzerDiagnosticsAsync().GetAwaiter().GetResult();
         }
     }

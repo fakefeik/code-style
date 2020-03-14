@@ -3,6 +3,8 @@ using System.Diagnostics.CodeAnalysis;
 
 using NUnit.Framework;
 
+using NUnitAssert = NUnit.Framework.Assert;
+
 namespace TestProject
 {
     public class TestClass
@@ -17,6 +19,9 @@ namespace TestProject
             string s = "";
             string a = "1", b = "3";
             Console.WriteLine(s);
+
+            NUnitAssert.AreEqual("a", "b");
+
             Assert.Pass();
         }
 
