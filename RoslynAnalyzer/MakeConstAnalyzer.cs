@@ -16,24 +16,14 @@ namespace RoslynAnalyzer
         {
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.Analyze | GeneratedCodeAnalysisFlags.None);
             context.EnableConcurrentExecution();
-            context.RegisterSyntaxNodeAction(AnalyzeMethod, SyntaxKind.MethodDeclaration);
-        }
-
-        private void AnalyzeMethod(SyntaxNodeAnalysisContext context)
-        {
-            var methodDeclaration = (MethodDeclarationSyntax)context.Node;
-            if (methodDeclaration.AttributeLists.Any(x => x.Attributes.Any(y => y.Name.ToString() == "Test"))) ;
+            context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.LocalDeclarationStatement);
         }
 
         private void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
             var localDeclaration = (LocalDeclarationStatementSyntax)context.Node;
-
-            // does not have const
             if (localDeclaration.Modifiers.Any(SyntaxKind.ConstKeyword))
-            {
                 return;
-            }
 
             var variableTypeName = localDeclaration.Declaration.Type;
             var variableType = context.SemanticModel.GetTypeInfo(variableTypeName).ConvertedType;

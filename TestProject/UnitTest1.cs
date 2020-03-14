@@ -7,11 +7,6 @@ namespace TestProject
 {
     public class TestClass
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         [SuppressMessage("ReSharper", "SuggestVarOrType_BuiltInTypes")]
         [SuppressMessage("ReSharper", "ConvertToConstant.Local")]
@@ -20,38 +15,42 @@ namespace TestProject
             const int i = 0;
             Console.WriteLine(i);
             string s = "";
+            string a = "1", b = "3";
             Console.WriteLine(s);
             Assert.Pass();
         }
 
-        /// <summary>
-        ///     Test description
-        /// </summary>
         [Test]
-        public void Test2()
+        public void TestEquals()
         {
-            Assert.Pass();
-        }
-
-        /// Test description
-        [Test]
-        public void Test3()
-        {
-            Assert.Pass();
-        }
-
-        // Test description
-        [Test]
-        public void Test4()
-        {
-            Assert.Pass();
+            Assert.AreEqual("a", Identity("a"));
+            Assert.AreEqual("a", Identity("a"), "reason");
+            Assert.AreEqual("a", Identity("a"), "Reason: {0}", "reason");
+            Assert.That(Identity("a"), Is.EqualTo("a"));
+            Assert.That(Identity("a"), Is.Not.EqualTo("b"));
         }
 
         [Test]
-        // Test description
-        public void Test5()
+        public void TestThrow()
         {
-            Assert.Pass();
+            Assert.DoesNotThrow(() => { });
+            Assert.Throws<ArgumentNullException>(() => throw new ArgumentNullException());
+            Assert.That(() => { }, Throws.Nothing);
+            Assert.That(() => throw new ArgumentException(), Throws.Exception);
+            Assert.That(() => throw new ArgumentNullException(), Throws.Exception.TypeOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void TestRest()
+        {
+            Assert.Contains("a", new[] {"a", "b"});
+            Assert.That(new[] {"a", "b"}, Contains.Item("a"));
+            Assert.That(new[] {"a", "b"}, Does.Contain("b"));
+        }
+
+        private static T Identity<T>(T t)
+        {
+            return t;
         }
     }
 }
