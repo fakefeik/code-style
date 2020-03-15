@@ -1,5 +1,5 @@
-﻿using System.Collections.Immutable;
-using System.Composition;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,9 +11,9 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
 
-namespace RoslynAnalyzer
+namespace TestAnalyzers
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(AssertEqualsCodeFixProvider)), Shared]
+    [ExportCodeFixProvider(LanguageNames.CSharp)]
     public class AssertEqualsCodeFixProvider : CodeFixProvider
     {
         public override async Task RegisterCodeFixesAsync(CodeFixContext context)
@@ -36,9 +36,13 @@ namespace RoslynAnalyzer
                 SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression,
                                                      invocationExpression.ArgumentList.Arguments[1].Expression,
                                                      SyntaxFactory.IdentifierName("Should")));
+
+            var beArgs = new List<ArgumentSyntax> {SyntaxFactory.Argument(invocationExpression.ArgumentList.Arguments[0].Expression)};
+            beArgs.AddRange(invocationExpression.ArgumentList.Arguments.Skip(2));
+
             var beInvocation = SyntaxFactory.InvocationExpression(
                 SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, shouldInvocation, SyntaxFactory.IdentifierName("Be")),
-                SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(new[] {SyntaxFactory.Argument(invocationExpression.ArgumentList.Arguments[0].Expression)})));
+                SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(beArgs)));
 
             var formattedInvocation = beInvocation.WithAdditionalAnnotations(Formatter.Annotation);
 

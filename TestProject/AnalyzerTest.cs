@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 using NUnit.Framework;
 
-using RoslynAnalyzer;
+using TestAnalyzers;
 
 namespace TestProject
 {
@@ -16,7 +16,7 @@ namespace TestProject
         [Test]
         public void Test1()
         {
-            var file = $"{TestContext.CurrentContext.TestDirectory}/../../../UnitTest1.cs";
+            var file = $"{TestContext.CurrentContext.TestDirectory}/../../../TestRoslyn.cs";
             var assemblies = new[] {typeof(object), typeof(Enumerable), typeof(TestAttribute)}.Select(x => x.Assembly.Location).ToArray();
 
             var project = new AdhocWorkspace().AddProject("test", LanguageNames.CSharp);
@@ -24,7 +24,7 @@ namespace TestProject
             project = project.AddMetadataReferences(assemblies.Select(x => MetadataReference.CreateFromFile(x)));
 
             var compilation = project.GetCompilationAsync().GetAwaiter().GetResult();
-            var c = compilation.WithAnalyzers(ImmutableArray.Create((DiagnosticAnalyzer)new MakeConstAnalyzer(), new AssertEqualsAnalyzer()));
+            var c = compilation.WithAnalyzers(ImmutableArray.Create((DiagnosticAnalyzer)new AssertEqualsAnalyzer()));
             var diagnostics = c.GetAnalyzerDiagnosticsAsync().GetAwaiter().GetResult();
         }
     }

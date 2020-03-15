@@ -1,30 +1,11 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 using NUnit.Framework;
 
-using NUnitAssert = NUnit.Framework.Assert;
-
 namespace TestProject
 {
-    public class TestClass
+    public class TestResharper
     {
-        [Test]
-        [SuppressMessage("ReSharper", "SuggestVarOrType_BuiltInTypes")]
-        [SuppressMessage("ReSharper", "ConvertToConstant.Local")]
-        public void Test1()
-        {
-            const int i = 0;
-            Console.WriteLine(i);
-            string s = "";
-            string a = "1", b = "3";
-            Console.WriteLine(s);
-
-            NUnitAssert.AreEqual("a", "b");
-
-            Assert.Pass();
-        }
-
         [Test]
         public void TestEquals()
         {
